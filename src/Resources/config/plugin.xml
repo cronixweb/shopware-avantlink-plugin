@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/v6.3.0/src/Core/Framework/Plugin/plugin.xsd">
+    <meta>
+        <name>Avantlink Integration By Cronix</name>
+        <version>1.0.0</version>
+        <author>Cronix LLC</author>
+        <copyright>Copyright (c) 2025 Cronixweb</copyright>
+        <license>MIT</license>
+        <link>https://cronixweb.com</link>
+        <description>Professional CronixAvantLink plugin for Shopware 6 - Advanced linking and automation capabilities</description>
+    </meta>
+    
+    <label lang="de-DE">Avantlink Integration By Cronix</label>
+    <label lang="en-GB">Avantlink Integration By Cronix</label>
+    
+    <description lang="de-DE">Professionelles CronixAvantLink Plugin für erweiterte Verknüpfungs- und Automatisierungsfunktionen in Shopware 6</description>
+    <description lang="en-GB">Professional CronixAvantLink plugin for advanced linking and automation capabilities in Shopware 6</description>
+    
+    <manufacturerLink lang="de-DE">https://cronixweb.com</manufacturerLink>
+    <manufacturerLink lang="en-GB">https://cronixweb.com</manufacturerLink>
+    
+    <supportLink lang="de-DE">https://cronixweb.com/support</supportLink>
+    <supportLink lang="en-GB">https://cronix.com/support</supportLink>
+    
+    <changelog>
+        <changes lang="de-DE">
+            <![CDATA[
+            <p><strong>Version 1.0.0</strong></p>
+            <ul>
+                <li>Initial release</li>
+                <li>Core functionality implementation</li>
+                <li>Professional plugin structure</li>
+            </ul>
+            ]]>
+        </changes>
+        <changes lang="en-GB">
+            <![CDATA[
+            <p><strong>Version 1.0.0</strong></p>
+            <ul>
+                <li>Initial release</li>
+                <li>Core functionality implementation</li>
+                <li>Professional plugin structure</li>
+            </ul>
+            ]]>
+        </changes>
+    </changelog>
+</plugin>

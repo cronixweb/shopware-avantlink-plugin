@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
+
+    <card>
+        <title>AvantLink Settings</title>
+
+        <input-field type="text">
+            <name>merchantId</name>
+            <label>AvantLink Merchant ID</label>
+            <defaultValue></defaultValue>
+        </input-field>
+
+        <input-field type="bool">
+            <name>testMode</name>
+            <label>Enable Test Mode?</label>
+            <defaultValue>false</defaultValue>
+        </input-field>
+
+        <input-field type="single-select">
+            <name>injectionPosition</name>
+            <label>Script Injection Position</label>
+            <component>sw-single-select</component>
+            <options>
+                <option>
+                    <id>head</id>
+                    <name>Head</name>
+                </option>
+                <option>
+                    <id>body_start</id>
+                    <name>Body Start</name>
+                </option>
+                <option>
+                    <id>body_end</id>
+                    <name>Body End</name>
+                </option>
+                <option>
+                    <id>footer</id>
+                    <name>Footer</name>
+                </option>
+            </options>
+            <defaultValue>body_end</defaultValue>
+        </input-field>
+
+    </card>
+</config>

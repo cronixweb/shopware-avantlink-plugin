@@ -1,0 +1,101 @@
+{# 
+    CronixAvantLink Plugin - Base Template Override
+
+    This template extends the default Shopware base template to provide
+    flexible AvantLink script injection at multiple positions throughout
+    the page structure. Administrators can choose where to inject the
+    tracking script based on their specific requirements.
+
+    Available Injection Positions:
+    - HEAD: Inside the <head> section (recommended for tracking pixels)
+    - BODY_START: Right after <body> opening tag
+    - BODY_END: Before </body> closing tag (recommended for performance)
+    - FOOTER: Inside the footer section
+
+    Features:
+    - Configurable injection position
+    - Conditional script loading based on merchant ID
+    - Visual debug indicators for each position
+    - Asynchronous script loading for optimal performance
+    - Optional "Test Mode" to control script visibility
+
+    @package CronixAvantLink
+    @author Suprabhat Joshi
+    @version 1.0.0
+    @copyright Copyright © 2025 Cronix Digital
+#}
+
+{% sw_extends '@Storefront/storefront/base.html.twig' %}
+
+{# 
+    Configuration Variables
+    Extract plugin configuration values for merchant ID, injection position,
+    and test mode flag (controls whether tracking script runs).
+#}
+{% set merchantId = config('CronixAvantLink.config.merchantId') %}
+{% set position = config('CronixAvantLink.config.injectionPosition') %}
+{% set testMode = config('CronixAvantLink.config.testMode') %}
+
+{# 
+    HEAD Section Injection
+
+    Injects AvantLink script into the <head> section when position is set to 'head'.
+    Only works when testMode is enabled.
+#}
+{% block base_head %}
+    {{ parent() }}
+     {% if merchantId is not empty and position == 'head' %}
+        <script async src="https://cdn.avmws.com/10{{ merchantId }}/"></script>
+        {% if testMode %}
+            <p style="color:green;">AvantLink injected in HEAD</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{# 
+    BODY Start Injection
+
+    Injects AvantLink script right after the <body> opening tag when position 
+    is set to 'body_start'. Only works when testMode is enabled.
+#}
+{% block base_body %}
+    {% if merchantId is not empty and position == 'body_start' %}
+        <script async src="https://cdn.avmws.com/10{{ merchantId }}/"></script>
+        {% if testMode %}
+            <p style="color:green;">AvantLink injected in HEAD</p>
+        {% endif %}
+    {% endif %}
+    {{ parent() }}
+{% endblock %}
+
+{# 
+    BODY End Injection
+
+    Injects AvantLink script before the </body> closing tag when position 
+    is set to 'body_end'. Only works when testMode is enabled.
+#}
+{% block base_body_script %}
+    {{ parent() }}
+     {% if merchantId is not empty and position == 'body_end' %}
+        <script async src="https://cdn.avmws.com/10{{ merchantId }}/"></script>
+        {% if testMode %}
+            <p style="color:green;">AvantLink injected in HEAD</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{# 
+    Footer Injection
+
+    Injects AvantLink script inside the footer section when position is set 
+    to 'footer'. Only works when testMode is enabled.
+#}
+{% block base_esi_footer %}
+    {{ parent() }}
+     {% if merchantId is not empty and position == 'footer' %}
+        <script async src="https://cdn.avmws.com/10{{ merchantId }}/"></script>
+        {% if testMode %}
+            <p style="color:green;">AvantLink injected in HEAD</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}

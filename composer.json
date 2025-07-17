@@ -1,0 +1,46 @@
+{
+    "name": "cronix-avant-link/cronix-avant-link",
+    "description": "Professional CronixAvantLink plugin for Shopware 6 - Advanced linking and automation capabilities",
+    "type": "shopware-platform-plugin",
+    "version": "1.0.0",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Crownix LLC",
+            "email": "sales@ycronixweb.com",
+            "homepage": "https://cronixweb.com/",
+            "role": "Company"
+        }
+    ],
+    "homepage": "https://cronixweb.com",
+    "support": {
+        "email": "sales@ycronixweb.com",
+        "docs": "https://cronixweb.com/docs",
+        "issues": "https://cronixweb.com/issues"
+    },
+    "keywords": ["shopware", "CronixAvantLink","plugin", "cronix", "automation", "linking","avaantlink","cronixweb"],
+    "require": {
+        "shopware/core": "~6.7.0"
+    },
+    "extra": {
+        "shopware-plugin-class": "CronixAvantLink\\CronixAvantLink",
+        "label": {
+            "de-DE": "Avantlink Integration By Cronix",
+            "en-GB": "Avantlink Integration By Cronix"
+        },
+        "description": {
+            "de-DE": "Professionelles CronixAvantLink Plugin für erweiterte Verknüpfungs- und Automatisierungsfunktionen",
+            "en-GB": "Professional CronixAvantLink plugin for advanced linking and automation capabilities"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "CronixAvantLink\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CronixAvantLink\\Tests\\": "tests/"
+        }
+    }
+}

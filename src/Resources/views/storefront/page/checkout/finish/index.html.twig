@@ -1,0 +1,87 @@
+{# 
+    CronixAvantLink Plugin - Checkout Finish Template
+    
+    This template extends the default Shopware checkout finish page to inject
+    AvantLink affiliate tracking scripts. It handles order completion tracking
+    with comprehensive order and line item data transmission.
+    
+    Features:
+    - One-time tracking per order (prevents duplicate tracking)
+    - Complete order data transmission to AvantLink
+    - Individual line item tracking
+    - Currency and location data support
+    - Customer type identification (guest vs registered)
+    
+    @package CronixAvantLink
+    @version 1.0.0
+    @author Suprabhat Joshi
+    @copyright © 2025 Cronix Digital
+#}
+
+{% sw_extends '@Storefront/storefront/page/checkout/finish/index.html.twig' %}
+
+{# 
+    Configuration Variables
+    Extract plugin configuration values and tracking status
+#}
+{% set merchantId = config('CronixAvantLink.config.merchantId') %}
+{% set position = config('CronixAvantLink.config.injectionPosition') %}
+{% set testMode = config('CronixAvantLink.config.testMode') %}
+{% set isTracked = page.extensions.isAvantLinkTracked.tracked ?? false %}
+
+{# 
+    Header Block Extension
+    Inject AvantLink tracking scripts in the header section
+    This ensures scripts load early in the page lifecycle
+#}
+{% block base_esi_header %}
+    {{ parent() }}
+
+    {# Re-extract tracking status for this block scope #}
+    {% set isTracked = page.extensions.isAvantLinkTracked.tracked ?? false %}
+    {% set testMode = config('CronixAvantLink.config.testMode') %}
+
+    {# 
+        AvantLink Tracking Script Injection
+        
+        Conditions for script execution:
+        1. Test Mode must be enabled
+        2. Merchant ID must be configured
+        3. Order object must exist
+        4. Order must not have been tracked already (prevents duplicates)
+    #}
+   {% if merchantId is not empty and page.order is not null and isTracked %}
+    <script>
+        var _AvantMetrics = _AvantMetrics || [];
+
+        _AvantMetrics.push(['order', {
+            order_id: '{{ page.order.orderNumber }}',
+            amount: '{{ page.order.amountTotal|number_format(2, ".", "") }}',
+            currency: '{{ context.currency.isoCode }}',
+            state: '{{ page.order.addresses.first.state.name ?? "N/A" }}',
+            country: '{{ page.order.addresses.first.country.name }}',
+            ecc: '{{ page.order.extensions.eccData ?? "N/A" }}',
+            new_customer: '{{ page.customer.guest ? "false" : "true" }}',
+            tax: '{{ page.order.amountNet|number_format(2, ".", "") }}',
+            shipping: '{{ page.order.shippingTotal|number_format(2, ".", "") }}'
+        }]);
+
+        {% for item in page.order.lineItems %}
+        _AvantMetrics.push(['item', {
+            order_id: '{{ page.order.orderNumber }}',
+            parent_sku: '{{ item.referencedId }}',
+            variant_sku: '{{ item.identifier }}',
+            price: '{{ item.unitPrice|number_format(2, ".", "") }}',
+            qty: '{{ item.quantity }}'
+        }]);
+        {% endfor %}
+    </script>
+
+    <script async src="https://cdn.avmws.com/10{{ merchantId }}/"></script>
+
+    {% if testMode %}
+        <p style="color:green;">🚨 AvantLink Fired (Test Mode): {{ page.order.orderNumber }}</p>
+    {% endif %}
+{% endif %}
+
+{% endblock %}
