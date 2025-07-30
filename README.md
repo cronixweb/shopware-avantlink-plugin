@@ -1,6 +1,6 @@
 # CronixAvantLink Plugin for Shopware 6
 
-**Official GitHub Repository:** https://github.com/cronixweb/shopware-avantlink-plugin
+**Official GitHub Repository:** [cronixweb/shopware-avantlink-plugin](https://github.com/cronixweb/shopware-avantlink-plugin)
 
 The CronixAvantLink plugin integrates AvantLink’s **site-wide** and **order confirmation tracking** scripts into your Shopware 6 storefront — making affiliate tracking simple and automated.
 
@@ -20,11 +20,11 @@ The CronixAvantLink plugin integrates AvantLink’s **site-wide** and **order co
 
 This plugin was tested using the `dockware/dev:latest` Docker image.
 
+### 1. Setup Shopware via Docker
 
-1. Setup Shopware via Docker
-Create a new folder like shopware_project and place the following docker-compose.yml file inside:
+Create a new folder like `shopware_project` and place the following `docker-compose.yml` file inside:
 
-
+```yaml
 version: "3.7"
 
 services:
@@ -52,70 +52,105 @@ volumes:
 networks:
   web:
     driver: bridge
+```
+
 Now run:
 
+```bash
 docker compose up -d
+```
+
 After container starts, you can access:
 
-Shopware Frontend: http://localhost
+- Shopware Frontend: http://localhost  
+- Shopware Admin Panel: http://localhost/admin (username: `admin`, password: `shopware`)
 
-Shopware Admin Panel: http://localhost/admin( name : admin ,password: shopware)
+---
 
-📦 Plugin Installation (Inside Docker)
+### 📦 Plugin Installation (Inside Docker)
+
 1. Access Docker Container
 
+```bash
 docker exec -it shopware bash
+```
+
 2. Navigate to Plugin Directory
 
+```bash
 cd custom/plugins/
+```
+
 3. Clone the Plugin (if not already placed)
 
+```bash
 git clone https://github.com/cronixweb/shopware-avantlink-plugin.git CronixAvantLink
-Or create plugin using bin/console plugin:create CronixAvantLink &
-copy the folder manually into custom/plugins.
+```
+
+Or create plugin using:
+
+```bash
+bin/console plugin:create CronixAvantLink
+```
+
+Then copy the folder manually into `custom/plugins`.
 
 4. Install & Activate Plugin
 
+```bash
 bin/console plugin:refresh
 bin/console plugin:install --activate CronixAvantLink
 bin/console cache:clear
-⚙️ Plugin Features
-✅ 1. Site-Wide Tracking Integration
-AvantLink script is injected globally into your storefront's <head> section.
+```
 
-Implemented in:
+---
 
-src/Storefront/Resources/views/storefront/base.html.twig
+## ⚙️ Plugin Features
 
-✅ 2. Order Confirmation Tracking Script
+### ✅ 1. Site-Wide Tracking Integration
+
+AvantLink script is injected globally into your storefront's `<head>` section.
+
+Implemented in:  
+`src/Storefront/Resources/views/storefront/base.html.twig`
+
+---
+
+### ✅ 2. Order Confirmation Tracking Script
+
 Tracks orders on the checkout "Thank You" page.
 
-Implemented in:
+Implemented in:  
+`src/Storefront/Resources/views/storefront/page/checkout/finish/index.html.twig`
 
+---
 
-src/Storefront/Resources/views/storefront/page/checkout/finish/index.html.twig
-✅ 3. Configuration from Admin
-Go to:
+### ✅ 3. Configuration from Admin
 
+Go to:  
+**Shopware Admin > Extensions > CronixAvantLink**
 
-Shopware Admin > Extensions > CronixAvantLink
 You can configure:
 
-Merchant ID
+- Merchant ID  
+- Test Mode  
+- Enable/Disable Tracking  
+- Script Injection Position  
 
-Test Mode
+---
 
-Enable/Disable Tracking
+### ✅ 4. Event Subscriber
 
-Script Injection Position
-
-✅ 4. Event Subscriber
 Used to dynamically inject data into Twig templates from order context.
 
+Implemented in:  
+`src/Storefront/Subscriber/OrderTrackingSubscriber.php`
 
-src/Storefront/Subscriber/OrderTrackingSubscriber.php
-🗂️ Plugin Folder Structure
+---
 
+## 🗂️ Plugin Folder Structure
+
+```
 custom/plugins/CronixAvantLink/
 ├── composer.json
 ├── src/
@@ -131,26 +166,39 @@ custom/plugins/CronixAvantLink/
 │   │   │       └── page/checkout/finish/index.html.twig
 │   │   └── Subscriber/
 │   │       └── OrderTrackingSubscriber.php
-🧪 Testing the Plugin
-Visit the Shopware storefront (http://localhost).
+```
 
-Go to checkout and complete a test order.
+---
 
-Open browser Developer Tools → Network tab → and check if the AvantLink script loads successfully.
+## 🧪 Testing the Plugin
 
-Test configuration changes via plugin settings in the admin.
+1. Visit the Shopware storefront: [http://localhost](http://localhost)  
+2. Go to checkout and complete a test order.  
+3. Open browser Developer Tools → Network tab → and check if the AvantLink script loads successfully.  
+4. Test configuration changes via plugin settings in the admin.
 
-for AvantLink Plugin Validation using shopware-cli extension use below command:
+To validate the AvantLink plugin using `shopware-cli`:
 
-a1aa8e575234:/app# shopware-cli extension validate custom/plugins/CronixAvantLink
+```bash
+shopware-cli extension validate custom/plugins/CronixAvantLink
+```
+
+Sample Output:
+
+```
 ✖ 0 problems (0 errors, 0 warnings)
-a1aa8e575234:/app#
+```
 
-🛡 License
+---
+
+## 🛡 License
+
 MIT License
 
-👨‍💻 Author
-Cronix LLC
-Website: https://cronixweb.com
-Email: admin@cronixweb.com
+---
 
+## 👨‍💻 Author
+
+**Cronix LLC**  
+Website: [https://cronixweb.com](https://cronixweb.com)  
+Email: [admin@cronixweb.com](mailto:admin@cronixweb.com)
