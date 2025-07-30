@@ -16,7 +16,7 @@
     "support": {
         "email": "sales@cronixweb.com",
         "docs": "https://github.com/cronixweb/shopware-avantlink-plugin",
-        "issues": " https://github.com/cronixweb/shopware-avantlink-plugin"
+        "issues": "https://github.com/cronixweb/shopware-avantlink-plugin"
     },
     "keywords": ["shopware", "CronixAvantLink","plugin", "cronix", "automation", "linking","avaantlink","cronixweb"],
     "require": {
