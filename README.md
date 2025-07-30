@@ -140,6 +140,12 @@ Open browser Developer Tools → Network tab → and check if the AvantLink scri
 
 Test configuration changes via plugin settings in the admin.
 
+for AvantLink Plugin Validation using shopware-cli extension use below command:
+
+a1aa8e575234:/app# shopware-cli extension validate custom/plugins/CronixAvantLink
+✖ 0 problems (0 errors, 0 warnings)
+a1aa8e575234:/app#
+
 🛡 License
 MIT License
 

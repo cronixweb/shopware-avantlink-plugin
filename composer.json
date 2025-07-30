@@ -1,6 +1,6 @@
 {
     "name": "cronix-avant-link/cronix-avant-link",
-    "description": "Professional CronixAvantLink plugin for Shopware 6 - Advanced linking and automation capabilities",
+    "description": "Complete AvantLink affiliate tracking solution for Shopware 6 with dual-layer tracking system: sitewide visitor tracking and detailed order conversion tracking with anti-duplication protection",
     "type": "shopware-platform-plugin",
     "version": "1.0.0",
     "license": "MIT",
@@ -14,9 +14,9 @@
     ],
     "homepage": "https://cronixweb.com",
     "support": {
-        "email": "sales@ycronixweb.com",
-        "docs": "https://cronixweb.com/docs",
-        "issues": "https://cronixweb.com/issues"
+        "email": "sales@cronixweb.com",
+        "docs": "https://github.com/cronixweb/shopware-avantlink-plugin",
+        "issues": " https://github.com/cronixweb/shopware-avantlink-plugin"
     },
     "keywords": ["shopware", "CronixAvantLink","plugin", "cronix", "automation", "linking","avaantlink","cronixweb"],
     "require": {
@@ -29,8 +29,16 @@
             "en-GB": "Avantlink Integration By Cronix"
         },
         "description": {
-            "de-DE": "Professionelles CronixAvantLink Plugin für erweiterte Verknüpfungs- und Automatisierungsfunktionen",
-            "en-GB": "Professional CronixAvantLink plugin for advanced linking and automation capabilities"
+            "de-DE": "AvantLink Affiliate-Tracking für Shopware 6 mit dualem System: Sitewide-Besucher-Tracking und detailliertes Order-Conversion-Tracking mit Anti-Duplikations-Schutz für genaue Ergebnisse.",
+            "en-GB": "AvantLink affiliate tracking for Shopware 6 with dual-layer system: comprehensive sitewide visitor tracking and detailed order conversion tracking with duplicate prevention."
+        },
+        "manufacturerLink": {
+            "de-DE": "https://cronixweb.com/",
+            "en-GB": "https://cronixweb.com/"
+        },
+        "supportLink": {
+            "de-DE": " https://cronixweb.com/contact-us/",
+            "en-GB": " https://cronixweb.com/contact-us/"
         }
     },
     "autoload": {
