@@ -151,22 +151,32 @@ Implemented in:
 ## 🗂️ Plugin Folder Structure
 
 ```
-custom/plugins/CronixAvantLink/
-├── composer.json
+CronixAvantLink/
 ├── src/
-│   ├── CronixAvantLink.php
 │   ├── Resources/
-│   │   └── config/
-│   │       ├── config.xml
-│   │       ├── plugin.png
+│   │   ├── config/
+│   │   │   ├── config.xml
+│   │   │   ├── plugin.png
+│   │   │   ├── plugin.xml
+│   │   │   ├── services.xml
+│   │   └── views/
+│   │       └── storefront/
+│   │           ├── layout/
+│   │           │   └── footer/
+│   │           │       └── footer-minimal.html.twig
+│   │           ├── page/
+│   │           │   └── checkout/
+│   │           │       └── finish/
+│   │           │           └── index.html.twig
+│   │           └── base.html.twig
 │   ├── Storefront/
-│   │   ├── Resources/views/
-│   │   │   └── storefront/
-│   │   │       ├── base.html.twig
-│   │   │       └── page/checkout/finish/index.html.twig
 │   │   └── Subscriber/
 │   │       └── OrderTrackingSubscriber.php
-```
+│   └── CronixAvantLink.php
+├── tests/
+├── composer.json
+├── phpunit.xml
+├── README.md
 
 ---
 
