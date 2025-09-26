@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/v6.3.0/src/Core/Framework/Plugin/plugin.xsd">
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/v6.6.0.0/src/Core/Framework/Plugin/plugin.xsd">
     <meta>
         <name>Avantlink Integration By Cronix</name>
         <version>1.0.0</version>

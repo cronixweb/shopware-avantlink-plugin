@@ -10,7 +10,8 @@ The CronixAvantLink plugin integrates AvantLink’s **site-wide** and **order co
 
 - PHP 8.1 or higher  
 - Docker with Docker Desktop (recommended for local dev)  
-- Shopware 6.7.x (Tested on 6.7)  
+- Shopware 6.6.x or 6.7.x (tested on 6.7)
+  - Minimum Shopware version: 6.6.0.0
 - Composer  
 - Git  
 
