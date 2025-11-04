@@ -1,4 +1,4 @@
-{# 
+﻿{# 
     CronixAvantLink Plugin - Base Template Override
 
     This template extends the default Shopware base template to provide
@@ -27,14 +27,11 @@
 
 {% sw_extends '@Storefront/storefront/base.html.twig' %}
 
-{# 
-    Configuration Variables
-    Extract plugin configuration values for merchant ID, injection position,
-    and test mode flag (controls whether tracking script runs).
-#}
 {% set merchantId = config('CronixAvantLink.config.merchantId') %}
+{% set merchantIdNumeric = merchantId is not empty and merchantId matches '/^\\d+$/' %}
 {% set position = config('CronixAvantLink.config.injectionPosition') %}
 {% set testMode = config('CronixAvantLink.config.testMode') %}
+{% set currentRoute = app.request.attributes.get('_route') %}
 
 {# 
     HEAD Section Injection
@@ -44,11 +41,17 @@
 #}
 {% block base_head %}
     {{ parent() }}
-     {% if merchantId is not empty and position == 'head' %}
-        <script async src="https://cdn.avmws.com/10{{ merchantId }}/"></script>
+    {% if merchantIdNumeric and position == 'head' %}
+        <script async src="https://cdn.avmws.com/10{{ merchantId|e('js') }}/"></script>
         {% if testMode %}
-            <p style="color:green;">AvantLink injected in HEAD</p>
+            <script>
+                console.info('CronixAvantLink: AvantLink sitewide script loaded in HEAD for merchant {{ merchantId|e('js') }}');
+            </script>
         {% endif %}
+    {% elseif position == 'head' and testMode %}
+        <script>
+            console.warn('CronixAvantLink: merchant ID must be numeric to load sitewide script. Current value: {{ merchantId|default('')|e('js') }}');
+        </script>
     {% endif %}
 {% endblock %}
 
@@ -59,11 +62,13 @@
     is set to 'body_start'. Only works when testMode is enabled.
 #}
 {% block base_body %}
-    {% if merchantId is not empty and position == 'body_start' %}
-        <script async src="https://cdn.avmws.com/10{{ merchantId }}/"></script>
+    {% if merchantIdNumeric and position == 'body_start' %}
+        <script async src="https://cdn.avmws.com/10{{ merchantId|e('js') }}/"></script>
         {% if testMode %}
-            <p style="color:green;">AvantLink injected in HEAD</p>
+            <div style="color:green;">AvantLink injected at body start</div>
         {% endif %}
+    {% elseif position == 'body_start' and testMode %}
+        <div style="color:red;">AvantLink merchant ID must be numeric to load script.</div>
     {% endif %}
     {{ parent() }}
 {% endblock %}
@@ -76,11 +81,21 @@
 #}
 {% block base_body_script %}
     {{ parent() }}
-     {% if merchantId is not empty and position == 'body_end' %}
-        <script async src="https://cdn.avmws.com/10{{ merchantId }}/"></script>
+    {% if merchantIdNumeric and position == 'body_end' %}
+        <script async src="https://cdn.avmws.com/10{{ merchantId|e('js') }}/"></script>
         {% if testMode %}
-            <p style="color:green;">AvantLink injected in HEAD</p>
+            <div style="color:green;">AvantLink injected at body end</div>
         {% endif %}
+    {% elseif position == 'body_end' and testMode %}
+        <div style="color:red;">AvantLink merchant ID must be numeric to load script.</div>
+    {% endif %}
+
+    {% if currentRoute == 'frontend.checkout.finish.page' %}
+        {% sw_include '@CronixAvantLink/storefront/component/avantlink/order-tracking-script.html.twig' with {
+            merchantId: merchantId,
+            testMode: testMode,
+            page: page
+        } only %}
     {% endif %}
 {% endblock %}
 
@@ -92,10 +107,12 @@
 #}
 {% block base_esi_footer %}
     {{ parent() }}
-     {% if merchantId is not empty and position == 'footer' %}
-        <script async src="https://cdn.avmws.com/10{{ merchantId }}/"></script>
+    {% if merchantIdNumeric and position == 'footer' %}
+        <script async src="https://cdn.avmws.com/10{{ merchantId|e('js') }}/"></script>
         {% if testMode %}
-            <p style="color:green;">AvantLink injected in HEAD</p>
+            <div style="color:green;">AvantLink injected in footer</div>
         {% endif %}
+    {% elseif position == 'footer' and testMode %}
+        <div style="color:red;">AvantLink merchant ID must be numeric to load script.</div>
     {% endif %}
 {% endblock %}

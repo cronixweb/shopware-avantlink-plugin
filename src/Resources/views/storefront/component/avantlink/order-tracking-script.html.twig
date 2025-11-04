@@ -1,0 +1,57 @@
+﻿{% if page is defined %}
+    {% set order = page.order %}
+    {% set trackedFlag = page.extensions.isAvantLinkTracked.tracked ?? false %}
+    {% set merchantId = merchantId is defined ? merchantId : config('CronixAvantLink.config.merchantId') %}
+    {% set testMode = testMode is defined ? testMode : config('CronixAvantLink.config.testMode') %}
+    {% set merchantIdNumeric = merchantId is not empty and merchantId matches '/^\\d+$/' %}
+    {% set customer = page.customer %}
+    {% set isGuest = customer is defined and customer ? customer.guest : true %}
+    {% set firstAddress = order and order.addresses is not null ? (order.addresses|first) : null %}
+    {% set stateName = firstAddress and firstAddress.state ? firstAddress.state.name : 'N/A' %}
+    {% set countryName = firstAddress and firstAddress.country ? firstAddress.country.name : 'N/A' %}
+    {% set eccCode = order and order.extensions is not null and order.extensions.eccData is defined ? order.extensions.eccData : 'N/A' %}
+    {% set shouldRender = order is not null and trackedFlag and (merchantIdNumeric or testMode) %}
+
+    {% if shouldRender %}
+        <script>
+            var _AvantMetrics = _AvantMetrics || [];
+
+            _AvantMetrics.push(['order', {{ {
+                'order_id': order.orderNumber,
+                'amount': order.amountTotal|number_format(2, '.', ''),
+                'currency': context.currency.isoCode,
+                'state': stateName,
+                'country': countryName,
+                'ecc': eccCode,
+                'new_customer': isGuest ? 'false' : 'true',
+                'tax': order.amountNet|number_format(2, '.', ''),
+                'shipping': order.shippingTotal|number_format(2, '.', '')
+            }|json_encode|raw }}]);
+
+            {% for item in order.lineItems %}
+                _AvantMetrics.push(['item', {{ {
+                    'order_id': order.orderNumber,
+                    'parent_sku': item.referencedId,
+                    'variant_sku': item.identifier,
+                    'price': item.unitPrice|number_format(2, '.', ''),
+                    'qty': item.quantity
+                }|json_encode|raw }}]);
+            {% endfor %}
+        </script>
+
+        {% if merchantIdNumeric %}
+            <script async src="https://cdn.avmws.com/10{{ merchantId|e('js') }}/"></script>
+        {% elseif testMode %}
+            <script>
+                console.warn('CronixAvantLink: merchant ID "{{ merchantId|default('')|e('js') }}" is not numeric; skipping AvantLink CDN load (test mode).');
+            </script>
+        {% endif %}
+
+        {% if testMode %}
+            <div style="color:green;">AvantLink Fired (Test Mode): {{ order.orderNumber }}</div>
+            <script>
+                console.info('CronixAvantLink: queued AvantLink metrics for order {{ order.orderNumber|e('js') }}', _AvantMetrics);
+            </script>
+        {% endif %}
+    {% endif %}
+{% endif %}
