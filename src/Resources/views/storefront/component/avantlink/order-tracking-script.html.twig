@@ -1,18 +1,54 @@
 ﻿{% if page is defined %}
+    <div style="color:blue;">CronixAvantLink debug: page object detected.</div>
     {% set order = page.order %}
+    <div style="color:blue;">CronixAvantLink debug: order assigned.</div>
     {% set trackedFlag = page.extensions.isAvantLinkTracked.tracked ?? false %}
+    <div style="color:blue;">CronixAvantLink debug: tracked flag = {{ trackedFlag ? 'true' : 'false' }}.</div>
     {% set merchantId = merchantId is defined ? merchantId : config('CronixAvantLink.config.merchantId') %}
+    <div style="color:blue;">CronixAvantLink debug: merchantId = {{ merchantId|default('') }}.</div>
     {% set testMode = testMode is defined ? testMode : config('CronixAvantLink.config.testMode') %}
+    <div style="color:blue;">CronixAvantLink debug: testMode = {{ testMode ? 'true' : 'false' }}.</div>
     {% set merchantIdNumeric = merchantId is not empty and merchantId matches '/^\\d+$/' %}
+    <div style="color:blue;">CronixAvantLink debug: merchantIdNumeric = {{ merchantIdNumeric ? 'true' : 'false' }}.</div>
     {% set customer = page.customer %}
     {% set isGuest = customer is defined and customer ? customer.guest : true %}
+    <div style="color:blue;">CronixAvantLink debug: isGuest = {{ isGuest ? 'true' : 'false' }}.</div>
     {% set firstAddress = order and order.addresses is not null ? (order.addresses|first) : null %}
+    <div style="color:blue;">CronixAvantLink debug: first address present? {{ firstAddress ? 'true' : 'false' }}.</div>
     {% set stateName = firstAddress and firstAddress.state ? firstAddress.state.name : 'N/A' %}
+    <div style="color:blue;">CronixAvantLink debug: stateName = {{ stateName }}.</div>
     {% set countryName = firstAddress and firstAddress.country ? firstAddress.country.name : 'N/A' %}
+    <div style="color:blue;">CronixAvantLink debug: countryName = {{ countryName }}.</div>
     {% set eccCode = order and order.extensions is not null and order.extensions.eccData is defined ? order.extensions.eccData : 'N/A' %}
+    <div style="color:blue;">CronixAvantLink debug: ECC code = {{ eccCode }}.</div>
     {% set shouldRender = order is not null and trackedFlag and (merchantIdNumeric or testMode) %}
+    <div style="color:blue;">CronixAvantLink debug: shouldRender = {{ shouldRender ? 'true' : 'false' }}.</div>
+
+    <script>
+        console.info('CronixAvantLink debug: order present?', {{ order is not null ? 'true' : 'false' }}, 'orderNumber', {{ order and order.orderNumber ? order.orderNumber|json_encode|raw : 'null' }});
+        console.info('CronixAvantLink debug: tracked flag', {{ trackedFlag ? 'true' : 'false' }});
+        console.info('CronixAvantLink debug: merchant ID', {{ merchantId|default('')|json_encode|raw }}, 'numeric?', {{ merchantIdNumeric ? 'true' : 'false' }});
+        console.info('CronixAvantLink debug: test mode', {{ testMode ? 'true' : 'false' }});
+        console.info('CronixAvantLink debug: customer guest?', {{ isGuest ? 'true' : 'false' }});
+        console.info('CronixAvantLink debug: first address exists?', {{ firstAddress ? 'true' : 'false' }});
+        console.info('CronixAvantLink debug: state name', {{ stateName|json_encode|raw }});
+        console.info('CronixAvantLink debug: country name', {{ countryName|json_encode|raw }});
+        console.info('CronixAvantLink debug: ecc code', {{ eccCode|json_encode|raw }});
+        console.info('CronixAvantLink debug: shouldRender', {{ shouldRender ? 'true' : 'false' }});
+    </script>
+
+    {% if not order %}
+        <div style="color:red;">CronixAvantLink debug: Order object missing; skipping tracking script.</div>
+    {% endif %}
+    {% if order and not trackedFlag %}
+        <div style="color:orange;">CronixAvantLink debug: Order exists but tracking flag is false; script suppressed.</div>
+    {% endif %}
+    {% if order and trackedFlag and not merchantIdNumeric and not testMode %}
+        <div style="color:red;">CronixAvantLink debug: Merchant ID invalid and test mode off; cannot render script.</div>
+    {% endif %}
 
     {% if shouldRender %}
+        <div style="color:green;">CronixAvantLink debug: Entered shouldRender block.</div>
         <script>
             var _AvantMetrics = _AvantMetrics || [];
 
@@ -29,6 +65,7 @@
             }|json_encode|raw }}]);
 
             {% for item in order.lineItems %}
+                <div style="color:green;">CronixAvantLink debug: pushing line item {{ item.identifier }}.</div>
                 _AvantMetrics.push(['item', {{ {
                     'order_id': order.orderNumber,
                     'parent_sku': item.referencedId,
@@ -40,8 +77,10 @@
         </script>
 
         {% if merchantIdNumeric %}
+            <div style="color:green;">CronixAvantLink debug: Loading AvantLink CDN with merchant {{ merchantId }}.</div>
             <script async src="https://cdn.avmws.com/10{{ merchantId|e('js') }}/"></script>
         {% elseif testMode %}
+            <div style="color:orange;">CronixAvantLink debug: Non-numeric merchant ID in test mode; CDN skipped.</div>
             <script>
                 console.warn('CronixAvantLink: merchant ID "{{ merchantId|default('')|e('js') }}" is not numeric; skipping AvantLink CDN load (test mode).');
             </script>
@@ -53,5 +92,9 @@
                 console.info('CronixAvantLink: queued AvantLink metrics for order {{ order.orderNumber|e('js') }}', _AvantMetrics);
             </script>
         {% endif %}
+    {% else %}
+        <div style="color:red;">CronixAvantLink debug: shouldRender evaluated false; tracking script not injected.</div>
     {% endif %}
+{% else %}
+    <div style="color:red;">CronixAvantLink debug: Page object unavailable in template context.</div>
 {% endif %}

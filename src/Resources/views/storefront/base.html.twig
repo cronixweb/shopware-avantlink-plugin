@@ -1,28 +1,6 @@
-﻿{# 
+﻿{#
     CronixAvantLink Plugin - Base Template Override
-
-    This template extends the default Shopware base template to provide
-    flexible AvantLink script injection at multiple positions throughout
-    the page structure. Administrators can choose where to inject the
-    tracking script based on their specific requirements.
-
-    Available Injection Positions:
-    - HEAD: Inside the <head> section (recommended for tracking pixels)
-    - BODY_START: Right after <body> opening tag
-    - BODY_END: Before </body> closing tag (recommended for performance)
-    - FOOTER: Inside the footer section
-
-    Features:
-    - Configurable injection position
-    - Conditional script loading based on merchant ID
-    - Visual debug indicators for each position
-    - Asynchronous script loading for optimal performance
-    - Optional "Test Mode" to control script visibility
-
-    @package CronixAvantLink
-    @author Suprabhat Joshi
-    @version 1.0.0
-    @copyright Copyright © 2025 Cronix Digital
+    Provides configurable AvantLink script injection positions across the storefront.
 #}
 
 {% sw_extends '@Storefront/storefront/base.html.twig' %}
@@ -33,12 +11,6 @@
 {% set testMode = config('CronixAvantLink.config.testMode') %}
 {% set currentRoute = app.request.attributes.get('_route') %}
 
-{# 
-    HEAD Section Injection
-
-    Injects AvantLink script into the <head> section when position is set to 'head'.
-    Only works when testMode is enabled.
-#}
 {% block base_head %}
     {{ parent() }}
     {% if merchantIdNumeric and position == 'head' %}
@@ -53,14 +25,11 @@
             console.warn('CronixAvantLink: merchant ID must be numeric to load sitewide script. Current value: {{ merchantId|default('')|e('js') }}');
         </script>
     {% endif %}
+    <script>
+        console.info('CronixAvantLink debug: base_head executed, route {{ currentRoute|default('N/A')|e('js') }}');
+    </script>
 {% endblock %}
 
-{# 
-    BODY Start Injection
-
-    Injects AvantLink script right after the <body> opening tag when position 
-    is set to 'body_start'. Only works when testMode is enabled.
-#}
 {% block base_body %}
     {% if merchantIdNumeric and position == 'body_start' %}
         <script async src="https://cdn.avmws.com/10{{ merchantId|e('js') }}/"></script>
@@ -71,14 +40,11 @@
         <div style="color:red;">AvantLink merchant ID must be numeric to load script.</div>
     {% endif %}
     {{ parent() }}
+    <script>
+        console.info('CronixAvantLink debug: base_body executed with position {{ position|e('js') }} and route {{ currentRoute|default('N/A')|e('js') }}');
+    </script>
 {% endblock %}
 
-{# 
-    BODY End Injection
-
-    Injects AvantLink script before the </body> closing tag when position 
-    is set to 'body_end'. Only works when testMode is enabled.
-#}
 {% block base_body_script %}
     {{ parent() }}
     {% if merchantIdNumeric and position == 'body_end' %}
@@ -96,15 +62,14 @@
             testMode: testMode,
             page: page
         } only %}
+    {% else %}
+        <div style="color:purple;">CronixAvantLink debug: base_body_script route {{ currentRoute|default('N/A') }} does not match checkout finish.</div>
     {% endif %}
+    <script>
+        console.info('CronixAvantLink debug: base_body_script executed on route {{ currentRoute|default('N/A')|e('js') }}');
+    </script>
 {% endblock %}
 
-{# 
-    Footer Injection
-
-    Injects AvantLink script inside the footer section when position is set 
-    to 'footer'. Only works when testMode is enabled.
-#}
 {% block base_esi_footer %}
     {{ parent() }}
     {% if merchantIdNumeric and position == 'footer' %}
@@ -115,4 +80,7 @@
     {% elseif position == 'footer' and testMode %}
         <div style="color:red;">AvantLink merchant ID must be numeric to load script.</div>
     {% endif %}
+    <script>
+        console.info('CronixAvantLink debug: base_esi_footer executed with position {{ position|e('js') }}');
+    </script>
 {% endblock %}
