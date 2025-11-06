@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/v6.6.0.0/src/Core/Framework/Plugin/plugin.xsd">
     <meta>
-        <name>Avantlink Integration By Cronix Temp</name>
-        <version>1.0.2</version>
+        <name>Avantlink Integration By Cronix</name>
+        <version>1.0.4</version>
         <author>Cronix LLC</author>
         <copyright>Copyright (c) 2025 Cronixweb</copyright>
         <license>MIT</license>
@@ -14,7 +14,7 @@
     <label lang="de-DE">Avantlink Integration By Cronix</label>
     <label lang="en-GB">Avantlink Integration By Cronix</label>
     
-    <description lang="de-DE">AvantLink Affiliate-Tracking für Shopware 6 mit dualem System: Sitewide-Besucher-Tracking und detailliertes Order-Conversion-Tracking mit Anti-Duplikations-Schutz für genaue Ergebnisse.</description>
+    <description lang="de-DE">AvantLink Affiliate-Tracking fuer Shopware 6 mit dualem System: Sitewide-Besucher-Tracking und detailliertes Order-Conversion-Tracking mit Anti-Duplikations-Schutz fuer genaue Ergebnisse.</description>
     <description lang="en-GB">AvantLink affiliate tracking for Shopware 6 with dual-layer system: comprehensive sitewide visitor tracking and detailed order conversion tracking with duplicate prevention.</description>
     
     <manufacturerLink lang="de-DE">https://cronixweb.com</manufacturerLink>
@@ -26,21 +26,21 @@
     <changelog>
         <changes lang="de-DE">
             <![CDATA[
-            <p><strong>Version 1.0.0</strong></p>
+            <p><strong>Version 1.0.4</strong></p>
             <ul>
-                <li>Initial release</li>
-                <li>Core functionality implementation</li>
-                <li>Professional plugin structure</li>
+                <li>Ueberarbeitete AvantLink-Bestellverfolgung fuer maximale Theme-Kompatibilitaet</li>
+                <li>JSON-kodierte AvantMetrics-Daten vermeiden Fehler bei Sonderzeichen</li>
+                <li>Validierung der Haendler-ID sowie klarere Testmodus-Ausgabe</li>
             </ul>
             ]]>
         </changes>
         <changes lang="en-GB">
             <![CDATA[
-            <p><strong>Version 1.0.0</strong></p>
+            <p><strong>Version 1.0.4</strong></p>
             <ul>
-                <li>Initial release</li>
-                <li>Core functionality implementation</li>
-                <li>Professional plugin structure</li>
+                <li>Reworked checkout tracking to load via base layout for theme overrides</li>
+                <li>JSON-encoded AvantMetrics payloads to avoid script errors with special characters</li>
+                <li>Added merchant ID validation and clearer test-mode status output</li>
             </ul>
             ]]>
         </changes>

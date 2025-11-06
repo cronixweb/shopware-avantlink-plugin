@@ -1,8 +1,8 @@
 {
-    "name": "cronix-avant-link/cronix-avant-link-test",
+    "name": "cronix-avant-link/cronix-avant-link",
     "description": "Complete AvantLink affiliate tracking solution for Shopware 6 with dual-layer tracking system: sitewide visitor tracking and detailed order conversion tracking with anti-duplication protection",
     "type": "shopware-platform-plugin",
-    "version": "1.0.2",
+    "version": "1.0.4",
     "license": "MIT",
     "authors": [
         {
@@ -25,8 +25,8 @@
     "extra": {
         "shopware-plugin-class": "CronixAvantLink\\CronixAvantLink",
         "label": {
-            "de-DE": "Avantlink Integration By Cronix-test",
-            "en-GB": "Avantlink Integration By Cronix-test"
+            "de-DE": "Avantlink Integration By Cronix",
+            "en-GB": "Avantlink Integration By Cronix"
         },
         "description": {
             "de-DE": "AvantLink Affiliate-Tracking für Shopware 6 mit dualem System: Sitewide-Besucher-Tracking und detailliertes Order-Conversion-Tracking mit Anti-Duplikations-Schutz für genaue Ergebnisse.",

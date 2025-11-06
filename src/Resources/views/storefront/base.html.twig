@@ -16,18 +16,11 @@
     {% if merchantIdNumeric and position == 'head' %}
         <script async src="https://cdn.avmws.com/10{{ merchantId|e('js') }}/"></script>
         {% if testMode %}
-            <script>
-                console.info('CronixAvantLink: AvantLink sitewide script loaded in HEAD for merchant {{ merchantId|e('js') }}');
-            </script>
+            <div style="color:green;">AvantLink injected in HEAD</div>
         {% endif %}
     {% elseif position == 'head' and testMode %}
-        <script>
-            console.warn('CronixAvantLink: merchant ID must be numeric to load sitewide script. Current value: {{ merchantId|default('')|e('js') }}');
-        </script>
+        <div style="color:red;">AvantLink merchant ID must be numeric to load script.</div>
     {% endif %}
-    <script>
-        console.info('CronixAvantLink debug: base_head executed, route {{ currentRoute|default('N/A')|e('js') }}');
-    </script>
 {% endblock %}
 
 {% block base_body %}
@@ -40,9 +33,6 @@
         <div style="color:red;">AvantLink merchant ID must be numeric to load script.</div>
     {% endif %}
     {{ parent() }}
-    <script>
-        console.info('CronixAvantLink debug: base_body executed with position {{ position|e('js') }} and route {{ currentRoute|default('N/A')|e('js') }}');
-    </script>
 {% endblock %}
 
 {% block base_body_script %}
@@ -62,12 +52,7 @@
             testMode: testMode,
             page: page
         } only %}
-    {% else %}
-        <div style="color:purple;">CronixAvantLink debug: base_body_script route {{ currentRoute|default('N/A') }} does not match checkout finish.</div>
     {% endif %}
-    <script>
-        console.info('CronixAvantLink debug: base_body_script executed on route {{ currentRoute|default('N/A')|e('js') }}');
-    </script>
 {% endblock %}
 
 {% block base_esi_footer %}
@@ -80,7 +65,4 @@
     {% elseif position == 'footer' and testMode %}
         <div style="color:red;">AvantLink merchant ID must be numeric to load script.</div>
     {% endif %}
-    <script>
-        console.info('CronixAvantLink debug: base_esi_footer executed with position {{ position|e('js') }}');
-    </script>
 {% endblock %}
