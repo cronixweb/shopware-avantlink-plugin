@@ -5,10 +5,10 @@
 
 {% sw_extends '@Storefront/storefront/base.html.twig' %}
 
-{% set merchantId = config('CronixAvantLink.config.merchantId') %}
+{% set merchantId = config('Cron1_CronixAvantLink.config.merchantId') %}
 {% set merchantIdNumeric = merchantId is not empty and merchantId matches '/^\\d+$/' %}
-{% set position = config('CronixAvantLink.config.injectionPosition') %}
-{% set testMode = config('CronixAvantLink.config.testMode') %}
+{% set position = config('Cron1_CronixAvantLink.config.injectionPosition') %}
+{% set testMode = config('Cron1_CronixAvantLink.config.testMode') %}
 {% set currentRoute = app.request.attributes.get('_route') %}
 
 {% block base_head %}
@@ -47,7 +47,7 @@
     {% endif %}
 
     {% if currentRoute == 'frontend.checkout.finish.page' %}
-        {% sw_include '@CronixAvantLink/storefront/component/avantlink/order-tracking-script.html.twig' with {
+        {% sw_include '@Cron1_CronixAvantLink/storefront/component/avantlink/order-tracking-script.html.twig' with {
             merchantId: merchantId,
             testMode: testMode,
             page: page

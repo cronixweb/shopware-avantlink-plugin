@@ -5,11 +5,11 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-    <service id="CronixAvantLink\CronixAvantLink" public="true">
+    <service id="Cron1_CronixAvantLink\Cron1_CronixAvantLink" public="true">
             <tag name="shopware.plugin" />
         </service>
          <!-- ✅ Register the OrderTrackingSubscriber -->
-        <service id="CronixAvantLink\Storefront\Subscriber\OrderTrackingSubscriber" public="true">
+        <service id="Cron1_CronixAvantLink\Storefront\Subscriber\OrderTrackingSubscriber" public="true">
             <argument type="service" id="request_stack"/>
             <tag name="kernel.event_subscriber"/>
         </service>

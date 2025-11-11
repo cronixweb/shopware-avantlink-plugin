@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace CronixAvantLink;
+namespace Cron1_CronixAvantLink;
 
 use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Plugin\Context\ActivateContext;
@@ -10,7 +10,7 @@ use Shopware\Core\Framework\Plugin\Context\UninstallContext;
 use Shopware\Core\Framework\Plugin\Context\UpdateContext;
 
 /**
- * CronixAvantLink Plugin
+ * Cron1_CronixAvantLink Plugin
  * 
  * Professional AvantLink affiliate tracking integration with flexible script injection capabilities.
  * This plugin provides seamless integration with AvantLink affiliate tracking system.
@@ -20,7 +20,7 @@ use Shopware\Core\Framework\Plugin\Context\UpdateContext;
  * @version 1.0.0
  * @copyright Copyright © 2025 Cronix Digital
  */
-class CronixAvantLink extends Plugin
+class Cron1_CronixAvantLink extends Plugin
 {
     /**
      * Plugin installation method

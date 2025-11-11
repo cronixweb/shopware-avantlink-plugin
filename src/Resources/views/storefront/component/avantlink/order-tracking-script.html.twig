@@ -1,8 +1,8 @@
 ﻿{% if page is defined %}
     {% set order = page.order %}
     {% set trackedFlag = page.extensions.isAvantLinkTracked.tracked ?? false %}
-    {% set merchantId = merchantId is defined ? merchantId : config('CronixAvantLink.config.merchantId') %}
-    {% set testMode = testMode is defined ? testMode : config('CronixAvantLink.config.testMode') %}
+    {% set merchantId = merchantId is defined ? merchantId : config('Cron1_CronixAvantLink.config.merchantId') %}
+    {% set testMode = testMode is defined ? testMode : config('Cron1_CronixAvantLink.config.testMode') %}
     {% set merchantIdNumeric = merchantId is not empty and merchantId matches '/^\\d+$/' %}
     {% set customer = page.customer %}
     {% set isGuest = customer is defined and customer ? customer.guest : true %}

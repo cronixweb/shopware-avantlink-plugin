@@ -4,9 +4,9 @@ use Shopware\Core\TestBootstrapper;
 
 $loader = (new TestBootstrapper())
     ->addCallingPlugin()
-    ->addActivePlugins('CronixAvantLink')
+    ->addActivePlugins('Cron1_CronixAvantLink')
     ->setForceInstallPlugins(true)
     ->bootstrap()
     ->getClassLoader();
 
-$loader->addPsr4('CronixAvantLink\\Tests\\', __DIR__);
+$loader->addPsr4('Cron1_CronixAvantLink\\Tests\\', __DIR__);

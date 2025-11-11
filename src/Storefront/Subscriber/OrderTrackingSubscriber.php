@@ -1,6 +1,6 @@
 <?php
 
-namespace CronixAvantLink\Storefront\Subscriber;
+namespace Cron1_CronixAvantLink\Storefront\Subscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Shopware\Storefront\Page\Checkout\Finish\CheckoutFinishPageLoadedEvent;
